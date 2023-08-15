@@ -17,7 +17,10 @@ export const useRegisterForm = () => {
         .nonempty('Esse campo é obrigatório')
         .min(4, 'O username precisa ter no mínimo 4 caracteres')
         .max(15, 'O username pode ter no máximo 15 caracteres')
-        .regex(/^[a-z]+$/, 'O username só pode ter letras minúsculas'),
+        .regex(
+          /^[a-z0-9_-]{3,15}$/,
+          'O username só pode ter letras minúsculas e números',
+        ),
       email: z
         .string()
         .nonempty('Esse campo é obrigatório')
