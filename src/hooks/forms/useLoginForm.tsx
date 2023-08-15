@@ -11,11 +11,12 @@ export const useLoginForm = () => {
   const loginFormSchema = z.object({
     email: z
       .string()
+      .nonempty('Esse campo é obrigatório')
       .regex(
         /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
         'Digite um email válido',
       ),
-    password: z.string(),
+    password: z.string().nonempty('Esse campo é obrigatório'),
   })
 
   const {

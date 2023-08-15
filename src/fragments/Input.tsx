@@ -52,15 +52,19 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
               {...rest}
             />
 
-            <button className="p-4 text-2xl" onClick={handleToggleHidePassword}>
+            <button
+              type="button"
+              className="p-4 text-2xl"
+              onClick={handleToggleHidePassword}
+            >
               {passwordIsHidden ? <Eye /> : <EyeSlash />}
             </button>
           </div>
         )}
 
-        {errorText && (
-          <strong className="text-md mt-2 text-red-700">{errorText}</strong>
-        )}
+        <span className="text-md mt-2 text-red-400">
+          {errorText && errorText}
+        </span>
       </div>
     )
   },
