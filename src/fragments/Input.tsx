@@ -62,9 +62,9 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
           </div>
         )}
 
-        {errorText && (
-          <strong className="text-md mt-2 text-red-700">{errorText}</strong>
-        )}
+        <span className="text-md mt-2 text-red-400">
+          {errorText && errorText}
+        </span>
       </div>
     )
   },
