@@ -1,45 +1,67 @@
-<<<<<<< HEAD
-"use client"
+'use client'
 
-import { Eye, EyeSlash } from "phosphor-react";
-import { useState, InputHTMLAttributes } from "react";
+import { Eye, EyeSlash } from 'phosphor-react'
+import {
+  InputHTMLAttributes,
+  useEffect,
+  useState,
+  forwardRef,
+  PropsWithRef,
+} from 'react'
+import { UseFormRegister, FieldValues } from 'react-hook-form'
 
-interface IInputProps extends InputHTMLAttributes<HTMLInputElement>  {
-    labelText: string;
-    inputType: string;
+interface IInputProps extends PropsWithRef<JSX.IntrinsicElements['input']> {
+  labelText?: string
+  inputType?: HTMLInputElement['type']
+  errorText?: string
 }
 
-export const Input = ({ labelText, inputType, ...props }: IInputProps) => {
-    const [showPassword, setShowPassword] = useState(false)
+export const Input = forwardRef<HTMLInputElement, IInputProps>(
+  function InputComponent(
+    { labelText, inputType = 'text', errorText, ...rest },
+    ref,
+  ) {
+    const [passwordIsHidden, setPasswordIsHidden] = useState(true)
 
-    const handleTogglePasswordVisibility = () => {
-        setShowPassword(!showPassword)
+    const handleToggleHidePassword = () => {
+      setPasswordIsHidden(!passwordIsHidden)
     }
 
     return (
-        <div>
-            <label htmlFor={props.id} className="text-md text-gray-200">{labelText}</label>
-            
-            {inputType === "password" && 
-            <div className="flex mt-2 w-full bg-zinc-950 text-gray-200 border-[1px] outline-none border-gray-400 rounded-md focus-within:border-red-600">
-                <input type={showPassword ? "text" : "password"} className="w-full h-full p-4 bg-transparent border-none outline-none" {...props} />
-                <button className="p-4 text-gray-200 text-2xl" onClick={handleTogglePasswordVisibility}>{showPassword ? <EyeSlash /> : <Eye />}</button>
-            </div>}
+      <div className="flex flex-col gap-2">
+        {labelText && (
+          <label htmlFor={rest.id} className="text-md text-gray-200">
+            {labelText}
+          </label>
+        )}
 
-            {inputType !== "password" && <input type={inputType} className="mt-2 w-full p-4 bg-zinc-950 text-gray-200 border-[1px] outline-none border-gray-400 rounded-md focus:border-red-600" {...props} />}
-=======
-import { InputHTMLAttributes } from "react";
+        {inputType !== 'password' && (
+          <input
+            className="w-full rounded-md border-[1px] border-gray-400 bg-zinc-950 p-4 text-gray-200 outline-none focus:border-red-600"
+            ref={ref}
+            {...rest}
+          />
+        )}
 
-interface IInputProps extends InputHTMLAttributes<HTMLInputElement>  {
-    labelText: string;
-}
+        {inputType === 'password' && (
+          <div className="flex w-full rounded-md border-[1px] border-gray-400 bg-zinc-950 text-gray-200 outline-none focus-within:border-red-600">
+            <input
+              className="w-full border-none bg-transparent p-4 outline-none"
+              type={passwordIsHidden ? 'password' : 'text'}
+              ref={ref}
+              {...rest}
+            />
 
-export const Input = ({ labelText, ...props }: IInputProps) => {
-    return (
-        <div>
-            <label htmlFor={props.id} className="text-md text-gray-200">{labelText}</label>
-            <input className="mt-2 w-full p-4 bg-zinc-950 text-gray-200 border-[1px] outline-none border-gray-400 rounded-md focus:border-red-600" {...props} />
->>>>>>> d144690c975bd56eb5f700a5fd9d3bb6b8397d90
-        </div>
+            <button className="p-4 text-2xl" onClick={handleToggleHidePassword}>
+              {passwordIsHidden ? <Eye /> : <EyeSlash />}
+            </button>
+          </div>
+        )}
+
+        {errorText && (
+          <strong className="text-md mt-2 text-red-700">{errorText}</strong>
+        )}
+      </div>
     )
-}
+  },
+)

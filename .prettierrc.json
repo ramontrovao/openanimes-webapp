@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
   "arrowParens": "always",
   "bracketSpacing": true,
@@ -12,18 +11,3 @@
   "endOfLine": "lf",
   "plugins": ["prettier-plugin-tailwindcss"]
 }
-=======
-{
-  "arrowParens": "always",
-  "bracketSpacing": true,
-  "printWidth": 80,
-  "proseWrap": "always",
-  "quoteProps": "as-needed",
-  "semi": false,
-  "singleQuote": true,
-  "tabWidth": 2,
-  "trailingComma": "all",
-  "endOfLine": "lf",
-  "plugins": ["prettier-plugin-tailwindcss"]
-}
->>>>>>> d144690c975bd56eb5f700a5fd9d3bb6b8397d90
