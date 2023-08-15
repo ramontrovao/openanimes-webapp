@@ -36,14 +36,14 @@ export const Input = ({
       )}
 
       {inputType === 'password' && (
-        <div className="mt-2 w-full rounded-md border-[1px] border-gray-400 bg-zinc-950 p-4 text-gray-200 outline-none focus:border-red-600">
+        <div className="mt-2 flex w-full rounded-md border-[1px] border-gray-400 bg-zinc-950 text-gray-200 outline-none focus:border-red-600">
           <input
-            className="w-full"
+            className="w-full border-none bg-transparent p-4 outline-none"
             type={passwordIsHidden ? 'password' : 'text'}
             {...props}
           />
 
-          <button onClick={handleToggleHidePassword}>
+          <button className="p-4 text-2xl" onClick={handleToggleHidePassword}>
             {passwordIsHidden ? <Eye /> : <EyeSlash />}
           </button>
         </div>
