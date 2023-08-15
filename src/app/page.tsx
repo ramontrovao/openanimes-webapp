@@ -1,10 +1,18 @@
+'use client'
+
 import Link from 'next/link'
+
 import { Input } from '@fragments/Input'
 import { Button } from '@fragments/Button'
+
 import { useLoginForm } from '@hooks/forms/useLoginForm'
 
 export default function Home() {
   const { register, handleSubmit, errors } = useLoginForm()
+
+  const onSubmit = (data: any) => {
+    console.log(data)
+  }
 
   return (
     <div className="flex w-full flex-col bg-gradient-to-r  from-zinc-900 to-zinc-950">
@@ -14,12 +22,17 @@ export default function Home() {
             Acesse a sua conta
           </h2>
 
-          <div className="flex w-full flex-col gap-4 rounded-md border-[1px] border-red-500 bg-zinc-800 p-8">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex w-full flex-col gap-4 rounded-md border-[1px] border-red-500 bg-zinc-800 p-8"
+          >
             <div className="flex flex-col gap-4">
               <Input
                 labelText="Seu e-mail"
                 id="email-field"
                 placeholder="irmaosdoforro@gmail.com"
+                errorText={errors.email?.message}
+                {...register('email')}
               />
 
               <Input
@@ -27,6 +40,8 @@ export default function Home() {
                 labelText="Sua senha"
                 id="password-field"
                 placeholder="AbubLeble1234598!@#"
+                errorText={errors.password?.message}
+                {...register('password')}
               />
             </div>
 
@@ -36,7 +51,7 @@ export default function Home() {
                 Não possuo uma conta, quero criar!
               </Link>
             </div>
-          </div>
+          </form>
         </section>
       </main>
     </div>
