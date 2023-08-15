@@ -1,8 +1,11 @@
 import Link from 'next/link'
 import { Input } from '@fragments/Input'
 import { Button } from '@fragments/Button'
+import { useLoginForm } from '@hooks/forms/useLoginForm'
 
 export default function Home() {
+  const { register, handleSubmit, errors } = useLoginForm()
+
   return (
     <div className="flex w-full flex-col bg-gradient-to-r  from-zinc-900 to-zinc-950">
       <main className="m-auto flex min-h-screen w-full max-w-[80rem] items-center justify-center px-4 py-24">
