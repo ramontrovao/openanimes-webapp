@@ -6,12 +6,26 @@ import { useRegisterForm } from '@hooks/forms/useRegisterForm'
 
 import { Button } from '@fragments/Button'
 import { Input } from '@fragments/Input'
+import { registerUser } from '@/src/services/api'
+
+type TRegisterForm = {
+  email: string
+  username: string
+  password: string
+  confirmPassword: string
+}
 
 export default function Register() {
   const { register, handleSubmit, errors } = useRegisterForm()
 
-  const onSubmit = (data: any) => {
-    console.log(data)
+  const onSubmit = async ({ email, username, password }: TRegisterForm) => {
+    try {
+      const payload = { email, name: username, password }
+      const res = await registerUser({ email, name: username, password })
+      console.log(res)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
