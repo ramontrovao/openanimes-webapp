@@ -11,6 +11,8 @@ import { Button } from '@fragments/Button'
 
 import { useLoginForm } from '@hooks/forms/useLoginForm'
 
+import 'react-toastify/dist/ReactToastify.css'
+
 type TLoginForm = {
   email: string
   password: string
