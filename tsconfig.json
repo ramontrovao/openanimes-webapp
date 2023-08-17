@@ -24,7 +24,9 @@
       "@styles/*": ["./src/styles/*"],
       "@fragments/*": ["./src/fragments/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@types/*": ["./src/types/*"]
+      "@types/*": ["./src/types/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@services/*": ["./src/services/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
