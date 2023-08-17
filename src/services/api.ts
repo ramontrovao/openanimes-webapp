@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { TRegisterUser } from '@/src/types/User'
+import { TLoginUser, TRegisterUser } from '@/src/types/User'
 import { AppError } from '@utils/AppError'
 import { AnyAaaaRecord } from 'dns'
 
@@ -18,6 +18,28 @@ export const registerUser = async ({
   try {
     const res = await api.post('/user/register', {
       name,
+      email,
+      password,
+    })
+
+    return res
+  } catch (error: any) {
+    const errorMessage = error.response.data.message as string
+    const errorStatusCode = error.response.status as number
+
+    console.log(errorMessage, errorStatusCode)
+
+    if (errorMessage && errorStatusCode) {
+      throw new AppError(errorMessage, errorStatusCode)
+    }
+
+    throw error
+  }
+}
+
+export const loginUser = async ({ email, password }: TLoginUser) => {
+  try {
+    const res = await api.post('/user/login', {
       email,
       password,
     })
