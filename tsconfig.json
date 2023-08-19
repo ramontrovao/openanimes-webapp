@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": "src/",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -20,13 +21,13 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
-      "@styles/*": ["./src/styles/*"],
-      "@fragments/*": ["./src/fragments/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@types/*": ["./src/types/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@services/*": ["./src/services/*"]
+      "@/*": ["*"],
+      "@styles/*": ["styles/*"],
+      "@fragments/*": ["fragments/*"],
+      "@hooks/*": ["hooks/*"],
+      "@types/*": ["types/*"],
+      "@utils/*": ["utils/*"],
+      "@services/*": ["services/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -1,8 +1,7 @@
 import axios from 'axios'
 
-import { TLoginUser, TRegisterUser } from '@/src/types/User'
+import { TLoginUser, TRegisterUser } from 'types/User'
 import { AppError } from '@utils/AppError'
-import { AnyAaaaRecord } from 'dns'
 
 const api = axios.create({
   baseURL: 'https://api.learxd.dev/open-animes/v1',
