@@ -2,13 +2,6 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-type TRegisterForm = {
-  username: string
-  email: string
-  password: string
-  confirmPassword: string
-}
-
 export const useRegisterForm = () => {
   const registerFormSchema = z
     .object({
@@ -42,6 +35,8 @@ export const useRegisterForm = () => {
       message: 'As senhas precisam ser iguais',
       path: ['confirmPassword'],
     })
+
+  type TRegisterForm = z.infer<typeof registerFormSchema>
 
   const {
     register,

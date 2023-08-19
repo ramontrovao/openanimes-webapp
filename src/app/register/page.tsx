@@ -59,21 +59,21 @@ export default function Register() {
   return (
     <>
       <div className="flex w-full flex-col bg-gradient-to-r  from-zinc-900 to-zinc-950">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+
         <main className="m-auto flex min-h-screen w-full max-w-[80rem] items-center justify-center px-4 py-24">
           <section className="flex w-full max-w-[40rem] flex-col gap-8">
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="dark"
-            />
-
             <h2 className="text-center text-2xl text-gray-100">
               Crie a sua conta
             </h2>
@@ -84,6 +84,7 @@ export default function Register() {
             >
               <div className="flex flex-col gap-4">
                 <Input
+                  inputVariant="default"
                   labelText="Seu apelido"
                   id="username-field"
                   placeholder="irmao_do_forro"
@@ -92,6 +93,7 @@ export default function Register() {
                 />
 
                 <Input
+                  inputVariant="default"
                   labelText="Seu e-mail"
                   id="email-field"
                   placeholder="irmaosdoforro@gmail.com"
@@ -100,7 +102,7 @@ export default function Register() {
                 />
 
                 <Input
-                  inputType="password"
+                  inputVariant="secret"
                   labelText="Sua senha"
                   id="password-field"
                   placeholder="AbubLeble1234598!@#"
@@ -109,7 +111,7 @@ export default function Register() {
                 />
 
                 <Input
-                  inputType="password"
+                  inputVariant="secret"
                   labelText="Confirme a sua senha"
                   id="confirm-password-field"
                   placeholder="AbubLeble1234598!@#"

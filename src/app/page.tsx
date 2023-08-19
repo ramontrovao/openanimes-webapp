@@ -18,7 +18,7 @@ type TLoginForm = {
   password: string
 }
 
-export default function Home() {
+export default function Login() {
   const { register, handleSubmit, errors } = useLoginForm()
 
   const onSubmit = async ({ email, password }: TLoginForm) => {
@@ -27,6 +27,7 @@ export default function Home() {
       const JWTtoken = await loginUser(payload)
 
       console.log(JWTtoken)
+
       return toast.success('Autenticado com sucesso =D', {
         position: 'top-right',
         autoClose: 5000,
@@ -57,21 +58,21 @@ export default function Home() {
 
   return (
     <div className="flex w-full flex-col bg-gradient-to-r  from-zinc-900 to-zinc-950">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+
       <main className="m-auto flex min-h-screen w-full max-w-[80rem] items-center justify-center px-4 py-24">
         <section className="flex w-full max-w-[40rem] flex-col gap-8">
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-          />
-
           <h2 className="text-center text-2xl text-gray-100">
             Acesse a sua conta
           </h2>
@@ -82,6 +83,7 @@ export default function Home() {
           >
             <div className="flex flex-col gap-4">
               <Input
+                inputVariant="default"
                 labelText="Seu e-mail"
                 id="email-field"
                 placeholder="irmaosdoforro@gmail.com"
@@ -90,7 +92,7 @@ export default function Home() {
               />
 
               <Input
-                inputType="password"
+                inputVariant="secret"
                 labelText="Sua senha"
                 id="password-field"
                 placeholder="AbubLeble1234598!@#"

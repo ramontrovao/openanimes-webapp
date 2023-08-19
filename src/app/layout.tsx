@@ -1,9 +1,11 @@
-import '@styles/global.css'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
+
 import { Header } from '@fragments/Header'
 
-const poppins = Poppins({ weight: ["400", "700"], subsets: ["latin"] })
+import '@styles/global.css'
+
+const poppins = Poppins({ weight: ['400', '700'], subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Open Animes',
