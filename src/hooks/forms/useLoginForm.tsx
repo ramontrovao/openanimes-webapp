@@ -2,11 +2,6 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-type TLoginForm = {
-  email: string
-  password: string
-}
-
 export const useLoginForm = () => {
   const loginFormSchema = z.object({
     email: z
@@ -18,6 +13,8 @@ export const useLoginForm = () => {
       ),
     password: z.string().nonempty('Esse campo é obrigatório'),
   })
+
+  type TLoginForm = z.infer<typeof loginFormSchema>
 
   const {
     register,
