@@ -18,7 +18,7 @@ type TLoginForm = {
   password: string
 }
 
-export default function Home() {
+export default function Login() {
   const { register, handleSubmit, errors } = useLoginForm()
 
   const onSubmit = async ({ email, password }: TLoginForm) => {

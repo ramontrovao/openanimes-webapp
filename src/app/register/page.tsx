@@ -59,21 +59,21 @@ export default function Register() {
   return (
     <>
       <div className="flex w-full flex-col bg-gradient-to-r  from-zinc-900 to-zinc-950">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+
         <main className="m-auto flex min-h-screen w-full max-w-[80rem] items-center justify-center px-4 py-24">
           <section className="flex w-full max-w-[40rem] flex-col gap-8">
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="dark"
-            />
-
             <h2 className="text-center text-2xl text-gray-100">
               Crie a sua conta
             </h2>
