@@ -84,6 +84,7 @@ export default function Register() {
             >
               <div className="flex flex-col gap-4">
                 <Input
+                  inputVariant="default"
                   labelText="Seu apelido"
                   id="username-field"
                   placeholder="irmao_do_forro"
@@ -92,6 +93,7 @@ export default function Register() {
                 />
 
                 <Input
+                  inputVariant="default"
                   labelText="Seu e-mail"
                   id="email-field"
                   placeholder="irmaosdoforro@gmail.com"
@@ -100,7 +102,7 @@ export default function Register() {
                 />
 
                 <Input
-                  inputType="password"
+                  inputVariant="secret"
                   labelText="Sua senha"
                   id="password-field"
                   placeholder="AbubLeble1234598!@#"
@@ -109,7 +111,7 @@ export default function Register() {
                 />
 
                 <Input
-                  inputType="password"
+                  inputVariant="secret"
                   labelText="Confirme a sua senha"
                   id="confirm-password-field"
                   placeholder="AbubLeble1234598!@#"

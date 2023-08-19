@@ -83,6 +83,7 @@ export default function Login() {
           >
             <div className="flex flex-col gap-4">
               <Input
+                inputVariant="default"
                 labelText="Seu e-mail"
                 id="email-field"
                 placeholder="irmaosdoforro@gmail.com"
@@ -91,7 +92,7 @@ export default function Login() {
               />
 
               <Input
-                inputType="password"
+                inputVariant="secret"
                 labelText="Sua senha"
                 id="password-field"
                 placeholder="AbubLeble1234598!@#"

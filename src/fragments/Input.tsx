@@ -1,24 +1,17 @@
 'use client'
 
 import { Eye, EyeSlash } from 'phosphor-react'
-import {
-  InputHTMLAttributes,
-  useEffect,
-  useState,
-  forwardRef,
-  PropsWithRef,
-} from 'react'
-import { UseFormRegister, FieldValues } from 'react-hook-form'
+import { useState, forwardRef, PropsWithRef } from 'react'
 
 interface IInputProps extends PropsWithRef<JSX.IntrinsicElements['input']> {
   labelText?: string
-  inputType?: HTMLInputElement['type']
+  inputVariant?: 'default' | 'secret'
   errorText?: string
 }
 
 export const Input = forwardRef<HTMLInputElement, IInputProps>(
   function InputComponent(
-    { labelText, inputType = 'text', errorText, ...rest },
+    { labelText, inputVariant = 'default', errorText, ...rest },
     ref,
   ) {
     const [passwordIsHidden, setPasswordIsHidden] = useState(true)
@@ -35,7 +28,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
           </label>
         )}
 
-        {inputType !== 'password' && (
+        {inputVariant === 'default' && (
           <input
             className="w-full rounded-md border-[1px] border-gray-400 bg-zinc-950 p-4 text-gray-200 outline-none focus:border-red-600"
             ref={ref}
@@ -43,7 +36,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
           />
         )}
 
-        {inputType === 'password' && (
+        {inputVariant === 'secret' && (
           <div className="flex w-full rounded-md border-[1px] border-gray-400 bg-zinc-950 text-gray-200 outline-none focus-within:border-red-600">
             <input
               className="w-full border-none bg-transparent p-4 outline-none"
