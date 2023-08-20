@@ -3,17 +3,13 @@
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import 'swiper/css'
-import { useEffect } from 'react'
+import { TAnimeData } from 'types/Animes'
 
-type TAnime = {
-  id: string
-  image: string
-}
+import 'swiper/css'
 
 interface ICategoryAnimesProps {
   categoryTitle: string
-  animes: TAnime[]
+  animes: TAnimeData[]
 }
 
 export const CategoryAnimesSection = ({
@@ -42,7 +38,7 @@ export const CategoryAnimesSection = ({
               <Image
                 className="h-full cursor-pointer rounded-md"
                 id={anime.id}
-                src={anime.image}
+                src={anime.images.poster_wide[0][7].source}
                 alt=""
                 width={350}
                 height={300}

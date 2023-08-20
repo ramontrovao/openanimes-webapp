@@ -51,3 +51,9 @@ export type TAnimeData = {
   slug_title: string
   series_metadata: TSeriesMetadata
 }
+
+export type TAnimeReponse = {
+  data: {
+    data: TAnimeData[]
+  }
+}

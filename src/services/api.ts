@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { TLoginUser, TRegisterUser, TRegisterUserResponse } from 'types/User'
-import { TAnimeData, TGetAnimes } from 'types/Animes'
+import { TAnimeData, TAnimeReponse, TGetAnimes } from 'types/Animes'
 import { AppError } from '@utils/AppError'
 
 const openAnimesApi = axios.create({
@@ -69,13 +69,13 @@ export const loginUser = async ({
 
 export const getAnimes = async ({
   sort_by,
-}: TGetAnimes): Promise<TAnimeData> => {
+}: TGetAnimes): Promise<TAnimeData[]> => {
   try {
-    const res: TAnimeData = await crunchyrollApi.get(
+    const res: TAnimeReponse = await crunchyrollApi.get(
       `/animes/browse?sort_by=${sort_by}`,
     )
 
-    return res
+    return res.data.data
   } catch (error: any) {
     const errorMessage = error.response.data.message as string
     const errorStatusCode = error.response.status as number
