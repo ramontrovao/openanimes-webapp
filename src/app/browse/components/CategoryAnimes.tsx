@@ -21,9 +21,9 @@ export const CategoryAnimes = ({
 }: ICategoryAnimesProps) => {
   return (
     <>
-      <section className="ml-16 mt-8 w-full">
+      <section className="my-8 ml-16 w-full">
         <header>
-          <h2 className="text-2xl font-bold text-white">{categoryTitle}</h2>
+          <h2 className="text-2xl font-bold text-gray-100">{categoryTitle}</h2>
         </header>
 
         <Swiper className="mt-4" loop slidesPerView={3.5} spaceBetween={30}>

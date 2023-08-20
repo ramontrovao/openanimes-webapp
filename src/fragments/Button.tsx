@@ -1,11 +1,16 @@
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode } from 'react'
 
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    children: ReactNode
+  children: ReactNode
 }
 
 export const Button = ({ children, ...props }: IButtonProps) => {
-    return (
-        <button className="w-full p-4 text-gray-100 bg-red-600 rounded-md hover:bg-red-700 transition-all duration-400" {...props}>{children}</button>
-    )
+  return (
+    <button
+      className="duration-400 flex w-full items-center justify-center gap-4 rounded-md bg-red-600 p-4 text-lg text-gray-100 transition-all hover:bg-red-700"
+      {...props}
+    >
+      {children}
+    </button>
+  )
 }
