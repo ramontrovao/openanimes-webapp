@@ -63,7 +63,13 @@ export default function Browse() {
       />
 
       <main className="m-auto flex min-h-screen w-full flex-col">
-        <HighlightSection />
+        <HighlightSection
+          anime={
+            animes.newly_added[
+              Math.floor(Math.random() * animes.newly_added.length - 1)
+            ]
+          }
+        />
         <CategoryAnimesSection
           categoryTitle="Em alta"
           animes={animes.popular}

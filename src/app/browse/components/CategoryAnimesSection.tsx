@@ -33,18 +33,19 @@ export const CategoryAnimesSection = ({
           }}
           spaceBetween={30}
         >
-          {animes.map((anime) => (
-            <SwiperSlide key={anime.id}>
-              <Image
-                className="h-full cursor-pointer rounded-md"
-                id={anime.id}
-                src={anime.images.poster_wide[0][7].source}
-                alt=""
-                width={350}
-                height={300}
-              />
-            </SwiperSlide>
-          ))}
+          {animes &&
+            animes.map((anime) => (
+              <SwiperSlide key={anime.id}>
+                <Image
+                  className="h-full cursor-pointer rounded-md"
+                  id={anime.id}
+                  src={anime.images.poster_wide[0][7].source}
+                  alt=""
+                  width={350}
+                  height={300}
+                />
+              </SwiperSlide>
+            ))}
         </Swiper>
       </section>
     </>
