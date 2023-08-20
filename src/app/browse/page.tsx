@@ -1,6 +1,6 @@
 import { animes } from '@constants/animes'
 
-import { CategoryAnimes } from './components/CategoryAnimes'
+import { CategoryAnimesSection } from './components/CategoryAnimesSection'
 import { HighlightSection } from './components/HighlightSection'
 
 export default function Browse() {
@@ -8,8 +8,11 @@ export default function Browse() {
     <div className="flex w-full flex-col overflow-hidden bg-gradient-to-r  from-zinc-900 to-zinc-950">
       <main className="m-auto flex min-h-screen w-full flex-col">
         <HighlightSection />
-        <CategoryAnimes categoryTitle="Em alta" animes={animes} />
-        <CategoryAnimes categoryTitle="Lançados recentemente" animes={animes} />
+        <CategoryAnimesSection categoryTitle="Em alta" animes={animes} />
+        <CategoryAnimesSection
+          categoryTitle="Lançados recentemente"
+          animes={animes}
+        />
       </main>
     </div>
   )
