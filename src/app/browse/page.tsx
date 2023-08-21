@@ -7,12 +7,13 @@ import { getAnimes } from '@services/api'
 import { AppError } from '@utils/AppError'
 import { useEffect, useState } from 'react'
 import { TAnimeData } from 'types/Animes'
+import { LoadingSection } from './components/LoadingSection'
 
 export default function Browse() {
-  const [animes, setAnimes] = useState({
-    popular: [] as TAnimeData[],
-    newly_added: [] as TAnimeData[],
-  })
+  const [animes, setAnimes] = useState<{
+    popular: TAnimeData[]
+    newly_added: TAnimeData[]
+  } | null>(null)
 
   const fetchAnimes = async () => {
     try {
@@ -63,21 +64,27 @@ export default function Browse() {
       />
 
       <main className="m-auto flex min-h-screen w-full flex-col">
-        <HighlightSection
-          anime={
-            animes.newly_added[
-              Math.floor(Math.random() * animes.newly_added.length - 1)
-            ]
-          }
-        />
-        <CategoryAnimesSection
-          categoryTitle="Em alta"
-          animes={animes.popular}
-        />
-        <CategoryAnimesSection
-          categoryTitle="Lançados recentemente"
-          animes={animes.newly_added}
-        />
+        {!animes && <LoadingSection />}
+
+        {animes && (
+          <>
+            <HighlightSection
+              anime={
+                animes.newly_added[
+                  Math.floor(Math.random() * animes.newly_added.length - 1)
+                ]
+              }
+            />
+            <CategoryAnimesSection
+              categoryTitle="Em alta"
+              animes={animes.popular}
+            />
+            <CategoryAnimesSection
+              categoryTitle="Lançados recentemente"
+              animes={animes.newly_added}
+            />
+          </>
+        )}
       </main>
     </div>
   )
