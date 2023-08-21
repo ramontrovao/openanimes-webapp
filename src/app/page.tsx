@@ -12,6 +12,7 @@ import { Button } from '@fragments/Button'
 import { useLoginForm } from '@hooks/forms/useLoginForm'
 
 import 'react-toastify/dist/ReactToastify.css'
+import { useRouter } from 'next/navigation'
 
 type TLoginForm = {
   email: string
@@ -20,6 +21,7 @@ type TLoginForm = {
 
 export default function Login() {
   const { register, handleSubmit, errors } = useLoginForm()
+  const { push } = useRouter()
 
   const onSubmit = async ({ email, password }: TLoginForm) => {
     try {
@@ -28,7 +30,7 @@ export default function Login() {
 
       console.log(JWTtoken)
 
-      return toast.success('Autenticado com sucesso =D', {
+      toast.success('Autenticado com sucesso =D', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -38,6 +40,8 @@ export default function Login() {
         progress: undefined,
         theme: 'dark',
       })
+
+      return push('/browse')
     } catch (error) {
       if (error instanceof AppError) {
         return toast.error(error.message, {
