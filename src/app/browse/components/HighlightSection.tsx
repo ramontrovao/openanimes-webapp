@@ -35,7 +35,7 @@ export const HighlightSection = ({ anime }: IHighlightSectionProps) => {
             </Button>
 
             <Button>
-              Conhecer <ArrowRight size={24} />
+              Ver mais <ArrowRight size={24} />
             </Button>
           </div>
         </div>
