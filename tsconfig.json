@@ -24,6 +24,7 @@
       "@/*": ["*"],
       "@styles/*": ["styles/*"],
       "@fragments/*": ["fragments/*"],
+      "@components/*": ["components/*"],
       "@hooks/*": ["hooks/*"],
       "@types/*": ["types/*"],
       "@utils/*": ["utils/*"],
