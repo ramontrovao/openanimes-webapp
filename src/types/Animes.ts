@@ -149,7 +149,9 @@ export type TEpisodeData = {
   versions: TVersion[]
   listing_id: string
   production_episode_id: string
-  images: TImageSource
+  images: {
+    thumbnail: TImageSource[][]
+  }
   availability_ends: string
   identifier: string
   slug_title: string
