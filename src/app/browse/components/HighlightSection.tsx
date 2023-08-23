@@ -6,6 +6,7 @@ import { TAnimeData } from 'types/Animes'
 
 import { Button } from '@fragments/Button'
 import { getFirst50Words } from '@/utils/getFirst50Words'
+import { AnimeInfos } from '@/components/AnimeInfos'
 
 interface IHighlightSectionProps {
   anime: TAnimeData
@@ -34,9 +35,14 @@ export const HighlightSection = ({ anime }: IHighlightSectionProps) => {
               Assistir <Eye size={24} />
             </Button>
 
-            <Button>
-              Ver mais <ArrowRight size={24} />
-            </Button>
+            <AnimeInfos
+              anime={anime}
+              triggerComponent={
+                <Button>
+                  Ver mais <ArrowRight size={24} />
+                </Button>
+              }
+            />
           </div>
         </div>
       </div>
