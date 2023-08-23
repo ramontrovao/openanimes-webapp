@@ -6,6 +6,9 @@ import {
   TAnimeReponse,
   TAnimeSeason,
   TAnimeSeasonsResponse,
+  TEpisodeData,
+  TEpisodesResponse,
+  TGetAnimeEpisodes,
   TGetAnimes,
   TGetAnimesSeasons,
 } from 'types/Animes'
@@ -101,6 +104,27 @@ export const getAnimesSeasons = async ({
   try {
     const res: TAnimeSeasonsResponse = await crunchyrollApi.get(
       `/animes/data?query=${query}`,
+    )
+
+    return res.data.data
+  } catch (error: any) {
+    const errorMessage = error.response.data.message as string
+    const errorStatusCode = error.response.status as number
+
+    if (errorMessage && errorStatusCode) {
+      throw new AppError(errorMessage, errorStatusCode)
+    }
+
+    throw error
+  }
+}
+
+export const getAnimeEpisodes = async ({
+  query,
+}: TGetAnimeEpisodes): Promise<TEpisodeData[]> => {
+  try {
+    const res: TEpisodesResponse = await crunchyrollApi.get(
+      `/animes/episodes?query=${query}`,
     )
 
     return res.data.data

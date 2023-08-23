@@ -6,6 +6,10 @@ export type TGetAnimesSeasons = {
   query: string
 }
 
+export type TGetAnimeEpisodes = {
+  query: string
+}
+
 export type TImageSource = {
   height: number
   source: string
@@ -127,6 +131,77 @@ export type TAnimeSeason = {
   panel: TPanel
   playhead: number
   shortcut: boolean
+}
+export type TVersion = {
+  audio_locale: string
+  guid: string
+  is_premium_only: boolean
+  media_guid: string
+  original: boolean
+  season_guid: string
+  variant: string
+}
+
+export type TEpisodeData = {
+  season_tags: any[]
+  is_dubbed: boolean
+  episode_air_date: string
+  versions: TVersion[]
+  listing_id: string
+  production_episode_id: string
+  images: TImageSource
+  availability_ends: string
+  identifier: string
+  slug_title: string
+  eligible_region: string
+  is_subbed: boolean
+  series_id: string
+  premium_available_date: string
+  duration_ms: number
+  season_number: number
+  episode: string
+  streams_link: string
+  slug: string
+  sequence_number: number
+  upload_date: string
+  id: string
+  season_id: string
+  seo_description: string
+  recent_audio_locale: string
+  extended_maturity_rating: {}
+  free_available_date: string
+  description: string
+  seo_title: string
+  hd_flag: boolean
+  episode_number: number
+  available_date: null
+  media_type: string
+  closed_captions_available: boolean
+  availability_starts: string
+  subtitle_locales: string[]
+  channel_id: string
+  available_offline: boolean
+  next_episode_title: string
+  season_slug_title: string
+  is_clip: boolean
+  availability_notes: string
+  is_mature: boolean
+  series_title: string
+  is_premium_only: boolean
+  series_slug_title: string
+  audio_locale: string
+  season_title: string
+  title: string
+  premium_date: null
+  mature_blocked: boolean
+  maturity_ratings: string[]
+  next_episode_id: string
+}
+
+export type TEpisodesResponse = {
+  data: {
+    data: TEpisodeData[]
+  }
 }
 
 export type TAnimeSeasonsResponse = {
