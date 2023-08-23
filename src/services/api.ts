@@ -1,7 +1,17 @@
 import axios from 'axios'
 
 import { TLoginUser, TRegisterUser, TRegisterUserResponse } from 'types/User'
-import { TAnimeData, TAnimeReponse, TGetAnimes } from 'types/Animes'
+import {
+  TAnimeData,
+  TAnimeReponse,
+  TAnimeSeason,
+  TAnimeSeasonsResponse,
+  TEpisodeData,
+  TEpisodesResponse,
+  TGetAnimeEpisodes,
+  TGetAnimes,
+  TGetAnimesSeasons,
+} from 'types/Animes'
 import { AppError } from '@utils/AppError'
 
 const openAnimesApi = axios.create({
@@ -73,6 +83,48 @@ export const getAnimes = async ({
   try {
     const res: TAnimeReponse = await crunchyrollApi.get(
       `/animes/browse?sort_by=${sort_by}`,
+    )
+
+    return res.data.data
+  } catch (error: any) {
+    const errorMessage = error.response.data.message as string
+    const errorStatusCode = error.response.status as number
+
+    if (errorMessage && errorStatusCode) {
+      throw new AppError(errorMessage, errorStatusCode)
+    }
+
+    throw error
+  }
+}
+
+export const getAnimesSeasons = async ({
+  query,
+}: TGetAnimesSeasons): Promise<TAnimeSeason[]> => {
+  try {
+    const res: TAnimeSeasonsResponse = await crunchyrollApi.get(
+      `/animes/data?query=${query}`,
+    )
+
+    return res.data.data
+  } catch (error: any) {
+    const errorMessage = error.response.data.message as string
+    const errorStatusCode = error.response.status as number
+
+    if (errorMessage && errorStatusCode) {
+      throw new AppError(errorMessage, errorStatusCode)
+    }
+
+    throw error
+  }
+}
+
+export const getAnimeEpisodes = async ({
+  query,
+}: TGetAnimeEpisodes): Promise<TEpisodeData[]> => {
+  try {
+    const res: TEpisodesResponse = await crunchyrollApi.get(
+      `/animes/episodes?query=${query}`,
     )
 
     return res.data.data
