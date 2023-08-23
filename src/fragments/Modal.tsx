@@ -26,7 +26,7 @@ export const Modal = ({
 
       <RadixModal.Portal>
         <RadixModal.Overlay className="fixed left-[50%] top-[50%] z-50 flex min-h-[100vh] min-w-[100vw] translate-x-[-50%] translate-y-[-50%] items-center justify-center bg-black bg-opacity-60">
-          <RadixModal.Content className="relative h-full max-h-[35rem] w-full max-w-[40rem] overflow-y-scroll rounded-md bg-zinc-900  p-8">
+          <RadixModal.Content className="relative h-full max-h-[35rem] w-full max-w-[40rem] overflow-y-scroll md:rounded-md bg-zinc-900  px-4 py-16 md:p-8">
             <header className="flex items-center justify-between bg-zinc-900">
               <RadixModal.Title className="text-2xl font-bold text-gray-100">
                 {title}

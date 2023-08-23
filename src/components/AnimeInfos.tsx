@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useState } from 'react'
 import Image from 'next/image'
 import { X } from 'phosphor-react'
 
@@ -46,9 +46,7 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
     try {
       const animes = await getAnimeEpisodes({ query: seasonId as string })
 
-      setEpisodes(animes)
-
-      return console.log(animes)
+      return setEpisodes(animes)
     } catch (error) {
       if (error instanceof AppError) {
         return toast.error(error.message, {
@@ -71,8 +69,6 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
     const seasonId = await fetchAnimeSeasons()
 
     await fetchAnimeEpisodes(seasonId as string)
-
-    console.log(episodes)
   }
 
   return (
@@ -101,7 +97,7 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
         {episodes && (
           <div className="mt-8 flex flex-col gap-4">
             {episodes.map((episode) => (
-              <EpisodeInfos episode={episode} key={episode.id} />
+              <EpisodeInfos key={episode.id} episode={episode} />
             ))}
           </div>
         )}

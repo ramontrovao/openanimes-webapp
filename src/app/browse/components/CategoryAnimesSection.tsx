@@ -18,7 +18,7 @@ export const CategoryAnimesSection = ({
   animes,
 }: ICategoryAnimesProps) => {
   return (
-    <section className="my-8 w-full max-md:p-4 md:ml-16">
+    <section className="my-4 w-full max-md:p-4 md:my-8 md:ml-16">
       <header>
         <h2 className="text-2xl font-bold text-gray-100">{categoryTitle}</h2>
       </header>

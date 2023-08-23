@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { Suspense } from 'react'
 
 import { TEpisodeData } from 'types/Animes'
 
@@ -11,12 +10,10 @@ export const EpisodeInfos = ({ episode }: IEpisodeInfosProps) => {
   const episodeDurationInMinutes = Math.floor(episode.duration_ms / 60000)
 
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col gap-4 md:flex-row">
       <Image
         className="transiton-all h-auto w-auto cursor-pointer rounded-md duration-500 selection:bg-none hover:opacity-80"
         loading="lazy"
-        placeholder="blur"
-        blurDataURL="data:image/jpeg"
         id={episode.id}
         src={episode.images.thumbnail[0][7].source}
         alt={`Capa do episódio "${episode.title}"`}
