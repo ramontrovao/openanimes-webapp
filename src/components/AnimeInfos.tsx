@@ -2,7 +2,7 @@ import { ReactNode, useState } from 'react'
 import Image from 'next/image'
 import { X } from 'phosphor-react'
 
-import { TAnimeData, TEpisodeData } from 'types/Animes'
+import { TAnimeData, TAnimeSeason, TEpisodeData } from 'types/Animes'
 
 import { Modal } from '@fragments/Modal'
 import { getAnimeEpisodes, getAnimesSeasons } from '@services/api'
@@ -15,15 +15,22 @@ interface IAnimeInfosProps {
   triggerComponent: ReactNode
 }
 
+type TAnimeInfo = {
+  episodesData: TEpisodeData[]
+  seasonsData: TAnimeSeason[]
+}
+
 export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
-  const [episodes, setEpisodes] = useState<TEpisodeData[] | null>(null)
+  const [animeInfo, setAnimeInfo] = useState<TAnimeInfo | null>(null)
+  const [seasonActive, setSeasonActive] = useState<TAnimeSeason | null>(null)
+
+  const episodesExists = !!animeInfo?.episodesData
 
   const fetchAnimeSeasons = async () => {
     try {
-      const animes = await getAnimesSeasons({ query: anime.id })
-      const animeSeasonId = animes[0].panel.episode_metadata.season_id
+      const seasonsData = await getAnimesSeasons({ query: anime.id })
 
-      return animeSeasonId
+      return seasonsData
     } catch (error) {
       if (error instanceof AppError) {
         return toast.error(error.message, {
@@ -44,9 +51,9 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
 
   const fetchAnimeEpisodes = async (seasonId: string) => {
     try {
-      const animes = await getAnimeEpisodes({ query: seasonId as string })
+      const episodesData = await getAnimeEpisodes({ query: seasonId as string })
 
-      return setEpisodes(animes)
+      return episodesData
     } catch (error) {
       if (error instanceof AppError) {
         return toast.error(error.message, {
@@ -66,9 +73,14 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
   }
 
   const onOpenModal = async () => {
-    const seasonId = await fetchAnimeSeasons()
+    const seasons = await fetchAnimeSeasons()
+    const seasonsData = seasons as TAnimeSeason[]
 
-    await fetchAnimeEpisodes(seasonId as string)
+    const episodes = await fetchAnimeEpisodes(seasonsData[0]?.id)
+    const episodesData = episodes as TEpisodeData[]
+
+    setAnimeInfo({ seasonsData, episodesData } as TAnimeInfo)
+    setSeasonActive(seasonsData[0])
   }
 
   return (
@@ -94,22 +106,22 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
       <main>
         <strong className="text-xl font-bold text-gray-100">Episódios</strong>
 
-        {episodes && (
+        {animeInfo && episodesExists && (
           <div className="mt-8 flex flex-col gap-4">
-            {episodes.map((episode) => (
+            {animeInfo.episodesData?.map((episode) => (
               <EpisodeInfos key={episode.id} episode={episode} />
             ))}
           </div>
         )}
 
-        {!episodes && (
+        {!episodesExists && (
           <div className="mt-8 flex flex-col gap-4">
-            <div className="min-h-[20rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[20rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[20rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[20rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[20rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[20rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
           </div>
         )}
       </main>

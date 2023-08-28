@@ -103,7 +103,7 @@ export const getAnimesSeasons = async ({
 }: TGetAnimesSeasons): Promise<TAnimeSeason[]> => {
   try {
     const res: TAnimeSeasonsResponse = await crunchyrollApi.get(
-      `/animes/data?query=${query}`,
+      `/animes/seasons?query=${query}`,
     )
 
     return res.data.data
