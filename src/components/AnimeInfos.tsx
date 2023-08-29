@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react'
+import { ChangeEvent, ReactNode, useState } from 'react'
 import Image from 'next/image'
 import { X } from 'phosphor-react'
 
@@ -25,7 +25,8 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
   const [animeInfo, setAnimeInfo] = useState<TAnimeInfo | null>(null)
   const [seasonActive, setSeasonActive] = useState<TAnimeSeason | null>(null)
 
-  const episodesExists = !!animeInfo?.episodesData
+  const episodesIsNotEmpty =
+    animeInfo?.episodesData && animeInfo?.episodesData.length > 0
   const seasonsTitle =
     animeInfo?.seasonsData.map((season) => season.title) ?? []
 
@@ -75,6 +76,21 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
     }
   }
 
+  const handleChangeSeason = async (e: ChangeEvent<HTMLSelectElement>) => {
+    const newSeasonTitle = e.target.value
+    const newSeasonActive = animeInfo?.seasonsData.find(
+      (season) => season.title === newSeasonTitle,
+    )
+
+    const newSeasonEpisodes = await fetchAnimeEpisodes(
+      newSeasonActive?.id as string,
+    )
+    setAnimeInfo({
+      ...animeInfo,
+      episodesData: newSeasonEpisodes,
+    } as TAnimeInfo)
+  }
+
   const onOpenModal = async () => {
     const seasons = await fetchAnimeSeasons()
     const seasonsData = seasons as TAnimeSeason[]
@@ -110,10 +126,10 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
         <header className="flex flex-wrap items-center gap-4 md:flex-nowrap">
           <strong className="text-xl font-bold text-gray-100">Episódios</strong>
 
-          <Select options={seasonsTitle} />
+          <Select onChange={handleChangeSeason} options={seasonsTitle} />
         </header>
 
-        {animeInfo && episodesExists && (
+        {animeInfo && episodesIsNotEmpty && (
           <main className="mt-8 flex flex-col gap-4">
             {animeInfo.episodesData?.map((episode) => (
               <EpisodeInfos key={episode.id} episode={episode} />
@@ -121,7 +137,7 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
           </main>
         )}
 
-        {!episodesExists && (
+        {!episodesIsNotEmpty && (
           <main className="mt-8 flex flex-col gap-4">
             <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
             <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
