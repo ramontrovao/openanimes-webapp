@@ -22,8 +22,8 @@ type TAnimeInfo = {
 }
 
 export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
+  const [isLoading, setIsLoading] = useState(true)
   const [animeInfo, setAnimeInfo] = useState<TAnimeInfo | null>(null)
-  const [seasonActive, setSeasonActive] = useState<TAnimeSeason | null>(null)
 
   const episodesIsNotEmpty =
     animeInfo?.episodesData && animeInfo?.episodesData.length > 0
@@ -77,6 +77,8 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
   }
 
   const handleChangeSeason = async (e: ChangeEvent<HTMLSelectElement>) => {
+    setIsLoading(true)
+
     const newSeasonTitle = e.target.value
     const newSeasonActive = animeInfo?.seasonsData.find(
       (season) => season.title === newSeasonTitle,
@@ -89,9 +91,13 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
       ...animeInfo,
       episodesData: newSeasonEpisodes,
     } as TAnimeInfo)
+
+    setIsLoading(false)
   }
 
   const onOpenModal = async () => {
+    setIsLoading(true)
+
     const seasons = await fetchAnimeSeasons()
     const seasonsData = seasons as TAnimeSeason[]
 
@@ -99,7 +105,8 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
     const episodesData = episodes as TEpisodeData[]
 
     setAnimeInfo({ seasonsData, episodesData } as TAnimeInfo)
-    setSeasonActive(seasonsData[0])
+
+    setIsLoading(false)
   }
 
   return (
@@ -129,22 +136,22 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
           <Select onChange={handleChangeSeason} options={seasonsTitle} />
         </header>
 
-        {animeInfo && episodesIsNotEmpty && (
+        {!isLoading && (
           <main className="mt-8 flex flex-col gap-4">
-            {animeInfo.episodesData?.map((episode) => (
+            {animeInfo?.episodesData?.map((episode) => (
               <EpisodeInfos key={episode.id} episode={episode} />
             ))}
           </main>
         )}
 
-        {!episodesIsNotEmpty && (
+        {isLoading && (
           <main className="mt-8 flex flex-col gap-4">
-            <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[12.5rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[12.5rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[12.5rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[12.5rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[12.5rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[12.5rem] w-full animate-pulse rounded-md bg-zinc-600" />
           </main>
         )}
       </main>
