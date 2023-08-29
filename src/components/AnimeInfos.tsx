@@ -9,6 +9,7 @@ import { getAnimeEpisodes, getAnimesSeasons } from '@services/api'
 import { toast } from 'react-toastify'
 import { AppError } from '@utils/AppError'
 import { EpisodeInfos } from '@/fragments/EpisodeInfos'
+import { Select } from '@fragments/Select'
 
 interface IAnimeInfosProps {
   anime: TAnimeData
@@ -25,6 +26,8 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
   const [seasonActive, setSeasonActive] = useState<TAnimeSeason | null>(null)
 
   const episodesExists = !!animeInfo?.episodesData
+  const seasonsTitle =
+    animeInfo?.seasonsData.map((season) => season.title) ?? []
 
   const fetchAnimeSeasons = async () => {
     try {
@@ -104,25 +107,29 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
       </header>
 
       <main>
-        <strong className="text-xl font-bold text-gray-100">Episódios</strong>
+        <header className="flex flex-wrap items-center gap-4 md:flex-nowrap">
+          <strong className="text-xl font-bold text-gray-100">Episódios</strong>
+
+          <Select options={seasonsTitle} />
+        </header>
 
         {animeInfo && episodesExists && (
-          <div className="mt-8 flex flex-col gap-4">
+          <main className="mt-8 flex flex-col gap-4">
             {animeInfo.episodesData?.map((episode) => (
               <EpisodeInfos key={episode.id} episode={episode} />
             ))}
-          </div>
+          </main>
         )}
 
         {!episodesExists && (
-          <div className="mt-8 flex flex-col gap-4">
+          <main className="mt-8 flex flex-col gap-4">
             <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
             <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
             <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
             <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
             <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
             <div className="min-h-[15rem] w-full animate-pulse rounded-md bg-zinc-600" />
-          </div>
+          </main>
         )}
       </main>
     </Modal>
