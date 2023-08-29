@@ -1,29 +1,40 @@
-import { ReactNode, useState } from 'react'
+import { ChangeEvent, ReactNode, useState } from 'react'
 import Image from 'next/image'
 import { X } from 'phosphor-react'
 
-import { TAnimeData, TEpisodeData } from 'types/Animes'
+import { TAnimeData, TAnimeSeason, TEpisodeData } from 'types/Animes'
 
 import { Modal } from '@fragments/Modal'
 import { getAnimeEpisodes, getAnimesSeasons } from '@services/api'
 import { toast } from 'react-toastify'
 import { AppError } from '@utils/AppError'
 import { EpisodeInfos } from '@/fragments/EpisodeInfos'
+import { Select } from '@fragments/Select'
 
 interface IAnimeInfosProps {
   anime: TAnimeData
   triggerComponent: ReactNode
 }
 
+type TAnimeInfo = {
+  episodesData: TEpisodeData[]
+  seasonsData: TAnimeSeason[]
+}
+
 export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
-  const [episodes, setEpisodes] = useState<TEpisodeData[] | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [animeInfo, setAnimeInfo] = useState<TAnimeInfo | null>(null)
+
+  const episodesIsNotEmpty =
+    animeInfo?.episodesData && animeInfo?.episodesData.length > 0
+  const seasonsTitle =
+    animeInfo?.seasonsData.map((season) => season.title) ?? []
 
   const fetchAnimeSeasons = async () => {
     try {
-      const animes = await getAnimesSeasons({ query: anime.id })
-      const animeSeasonId = animes[0].panel.episode_metadata.season_id
+      const seasonsData = await getAnimesSeasons({ query: anime.id })
 
-      return animeSeasonId
+      return seasonsData
     } catch (error) {
       if (error instanceof AppError) {
         return toast.error(error.message, {
@@ -44,9 +55,9 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
 
   const fetchAnimeEpisodes = async (seasonId: string) => {
     try {
-      const animes = await getAnimeEpisodes({ query: seasonId as string })
+      const episodesData = await getAnimeEpisodes({ query: seasonId as string })
 
-      return setEpisodes(animes)
+      return episodesData
     } catch (error) {
       if (error instanceof AppError) {
         return toast.error(error.message, {
@@ -65,10 +76,37 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
     }
   }
 
-  const onOpenModal = async () => {
-    const seasonId = await fetchAnimeSeasons()
+  const handleChangeSeason = async (e: ChangeEvent<HTMLSelectElement>) => {
+    setIsLoading(true)
 
-    await fetchAnimeEpisodes(seasonId as string)
+    const newSeasonTitle = e.target.value
+    const newSeasonActive = animeInfo?.seasonsData.find(
+      (season) => season.title === newSeasonTitle,
+    )
+
+    const newSeasonEpisodes = await fetchAnimeEpisodes(
+      newSeasonActive?.id as string,
+    )
+    setAnimeInfo({
+      ...animeInfo,
+      episodesData: newSeasonEpisodes,
+    } as TAnimeInfo)
+
+    setIsLoading(false)
+  }
+
+  const onOpenModal = async () => {
+    setIsLoading(true)
+
+    const seasons = await fetchAnimeSeasons()
+    const seasonsData = seasons as TAnimeSeason[]
+
+    const episodes = await fetchAnimeEpisodes(seasonsData[0]?.id)
+    const episodesData = episodes as TEpisodeData[]
+
+    setAnimeInfo({ seasonsData, episodesData } as TAnimeInfo)
+
+    setIsLoading(false)
   }
 
   return (
@@ -92,25 +130,29 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
       </header>
 
       <main>
-        <strong className="text-xl font-bold text-gray-100">Episódios</strong>
+        <header className="flex flex-wrap items-center justify-between gap-4 md:flex-nowrap">
+          <strong className="text-xl font-bold text-gray-100">Episódios</strong>
 
-        {episodes && (
-          <div className="mt-8 flex flex-col gap-4">
-            {episodes.map((episode) => (
+          <Select onChange={handleChangeSeason} options={seasonsTitle} />
+        </header>
+
+        {!isLoading && (
+          <main className="mt-8 flex flex-col gap-4">
+            {animeInfo?.episodesData?.map((episode) => (
               <EpisodeInfos key={episode.id} episode={episode} />
             ))}
-          </div>
+          </main>
         )}
 
-        {!episodes && (
-          <div className="mt-8 flex flex-col gap-4">
-            <div className="min-h-[20rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[20rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[20rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[20rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[20rem] w-full animate-pulse rounded-md bg-zinc-600" />
-            <div className="min-h-[20rem] w-full animate-pulse rounded-md bg-zinc-600" />
-          </div>
+        {isLoading && (
+          <main className="mt-8 flex flex-col gap-4">
+            <div className="min-h-[12.5rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[12.5rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[12.5rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[12.5rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[12.5rem] w-full animate-pulse rounded-md bg-zinc-600" />
+            <div className="min-h-[12.5rem] w-full animate-pulse rounded-md bg-zinc-600" />
+          </main>
         )}
       </main>
     </Modal>

@@ -126,12 +126,42 @@ export type TPanel = {
 }
 
 export type TAnimeSeason = {
-  fully_watched: boolean
-  never_watched: boolean
-  panel: TPanel
-  playhead: number
-  shortcut: boolean
+  is_complete: boolean;
+  keywords: string[];
+  images: Record<string, unknown>;
+  audio_locales: string[];
+  id: string;
+  extended_maturity_rating: Record<string, unknown>;
+  is_subbed: boolean;
+  channel_id: string;
+  season_sequence_number: number;
+  description: string;
+  subtitle_locales: string[];
+  mature_blocked: boolean;
+  audio_locale: string;
+  series_id: string;
+  season_display_number: string;
+  maturity_ratings: string[];
+  title: string;
+  identifier: string;
+  versions: {
+    audio_locale: string;
+    guid: string;
+    original: boolean;
+    variant: string;
+  }[];
+  number_of_episodes: number;
+  slug_title: string;
+  season_number: number;
+  is_mature: boolean;
+  is_dubbed: boolean;
+  seo_description: string;
+  season_tags: string[];
+  is_simulcast: boolean;
+  seo_title: string;
+  availability_notes: string;
 }
+
 export type TVersion = {
   audio_locale: string
   guid: string
