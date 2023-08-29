@@ -130,7 +130,7 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
       </header>
 
       <main>
-        <header className="flex flex-wrap items-center gap-4 md:flex-nowrap">
+        <header className="flex flex-wrap items-center justify-between gap-4 md:flex-nowrap">
           <strong className="text-xl font-bold text-gray-100">Episódios</strong>
 
           <Select onChange={handleChangeSeason} options={seasonsTitle} />
