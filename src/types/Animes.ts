@@ -6,6 +6,10 @@ export type TGetAnimesSeasons = {
   query: string
 }
 
+export type TGetEpisodeStream = {
+  query: string
+}
+
 export type TGetAnimeEpisodes = {
   query: string
 }
@@ -230,11 +234,49 @@ export type TEpisodeData = {
   next_episode_id: string
 }
 
+export type TStreamData = {
+  drm_download_hls: Record<string, {
+    hardsub_locale: string;
+    url: string;
+  }>;
+  vo_adaptive_dash: Record<string, {
+    hardsub_locale: string;
+    url: string;
+  }>;
+  vo_drm_adaptive_hls: Record<string, {
+    hardsub_locale: string;
+    url: string;
+  }>;
+  drm_adaptive_hls: Record<string, {
+    hardsub_locale: string;
+    url: string;
+  }>;
+  download_hls: Record<string, {
+    hardsub_locale: string;
+    url: string;
+  }>;
+  download_dash: Record<string, {
+    hardsub_locale: string;
+    url: string;
+  }>;
+  drm_multitrack_adaptive_hls_v2: Record<string, {
+    hardsub_locale: string;
+    url: string;
+  }>;
+};
+
 export type TEpisodesResponse = {
   data: {
     data: TEpisodeData[]
   }
 }
+
+export type TEpisodeStreamResponse = {
+  data: {
+    data: TStreamData[]
+  }
+}
+
 
 export type TAnimeSeasonsResponse = {
   data: {

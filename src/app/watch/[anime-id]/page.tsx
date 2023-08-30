@@ -1,7 +1,11 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { getEpisodeStream } from '@/services/api'
+import { TStreamData } from '@/types/Animes'
+import { AppError } from '@utils/AppError'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 interface IWatchProps {
   params: {
@@ -10,12 +14,50 @@ interface IWatchProps {
 }
 
 export default function Watch({ params }: IWatchProps) {
+  const [isLoading, setIsLoading] = useState(true)
+  const [stream, setStream] = useState<TStreamData | null>(null)
+
   const queryParams = useSearchParams()
   const videoId = queryParams.get('v')
 
   useEffect(() => {
-    console.log(params['anime-id'], videoId)
-  }, [videoId, params])
+    const fetchEpisodeStream = async () => {
+      try {
+        setIsLoading(true)
 
-  return <h1>Watch</h1>
+        const streamData = await getEpisodeStream({ query: videoId as string })
+  
+        return setStream(streamData[0])
+      } catch (error) {
+        if (error instanceof AppError) {
+          return toast.error(error.message, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'dark',
+          })
+        }
+  
+        return console.log(error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchEpisodeStream()
+  }, [videoId])
+
+  return (
+    <>
+      <div className="flex min-h-screen w-full flex-col overflow-hidden bg-gradient-to-r  from-zinc-900 to-zinc-950">
+        <main>
+
+        </main>
+      </div>
+    </>
+  )
 }
