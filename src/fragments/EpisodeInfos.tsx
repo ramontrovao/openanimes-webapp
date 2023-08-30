@@ -1,18 +1,25 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
-import { TEpisodeData } from 'types/Animes'
+import { TAnimeData, TEpisodeData } from 'types/Animes'
 
 interface IEpisodeInfosProps {
+  anime: TAnimeData
   episode: TEpisodeData
 }
 
-export const EpisodeInfos = ({ episode }: IEpisodeInfosProps) => {
+export const EpisodeInfos = ({ anime, episode }: IEpisodeInfosProps) => {
   const episodeDurationInMinutes = Math.floor(episode.duration_ms / 60000)
+  const videoJapaneseVersion = episode.versions.find(version => version.audio_locale === "ja-JP")
 
   return (
-    <div className="flex flex-col gap-4 md:flex-row">
+    <Link href={{
+      pathname: `/watch/${anime.id}`,
+      query: { v: videoJapaneseVersion?.media_guid }
+    }}
+     className="flex flex-col gap-4 md:flex-row hover:opacity-80 transiton-all duration-300">
       <Image
-        className="transiton-all h-auto w-auto cursor-pointer rounded-md duration-500 selection:bg-none hover:opacity-80"
+        className="h-auto w-auto cursor-pointer rounded-md selection:bg-none"
         loading="lazy"
         id={episode.id}
         src={episode.images.thumbnail[0][7].source}
@@ -33,6 +40,6 @@ export const EpisodeInfos = ({ episode }: IEpisodeInfosProps) => {
           - <p className="text-gray-300">{episodeDurationInMinutes} min</p>
         </main>
       </div>
-    </div>
+    </Link>
   )
 }
