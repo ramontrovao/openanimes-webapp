@@ -5,7 +5,7 @@ import { TStreamData } from '@/types/Animes'
 import { AppError } from '@utils/AppError'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import ReactPlayer from "react-player/lazy"
+import ReactPlayer from 'react-player/lazy'
 import { toast } from 'react-toastify'
 
 interface IWatchProps {
@@ -42,7 +42,7 @@ export default function Watch({ params }: IWatchProps) {
             theme: 'dark',
           })
         }
-  
+
         return console.log(error)
       } finally {
         setIsLoading(false)
@@ -54,15 +54,22 @@ export default function Watch({ params }: IWatchProps) {
 
   return (
     <>
-      <div className="flex min-h-screen w-full flex-col overflow-hidden bg-gradient-to-r  from-zinc-900 to-zinc-950">
+      <div className="flex w-full flex-col overflow-hidden bg-gradient-to-r  from-zinc-900 to-zinc-950">
         {!isLoading && stream && (
-          <main className='w-full h-full flex '>
-            <ReactPlayer config={{ file: { forceHLS: true} }} controls url={stream.adaptive_hls["pt-BR"].url} />
-        </main>
+          <main className="flex min-h-screen w-full items-center justify-center ">
+            <ReactPlayer
+              config={{ file: { forceHLS: true } }}
+              controls
+              url={stream.adaptive_hls['pt-BR'].url}
+            />
+          </main>
         )}
 
-        {isLoading && <main>
-          <h1>Carregando...</h1></main>}
+        {isLoading && (
+          <main>
+            <h1>Carregando...</h1>
+          </main>
+        )}
       </div>
     </>
   )
