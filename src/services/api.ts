@@ -148,8 +148,7 @@ export const getEpisodeStream = async ({
 }: TGetEpisodeStream): Promise<TStreamData[]> => {
   try {
     const res: TEpisodeStreamResponse = await crunchyrollApi.get(
-      `/animes/streams?query=${query}`,
-    )
+      `/animes/streams?query=${query}`)
 
     return res.data.data
   } catch (error: any) {

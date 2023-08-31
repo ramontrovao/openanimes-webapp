@@ -259,6 +259,10 @@ export type TStreamData = {
     hardsub_locale: string;
     url: string;
   }>;
+  adaptive_hls: Record<string, {
+    hardsub_locale: string;
+    url: string;
+  }>;
   drm_multitrack_adaptive_hls_v2: Record<string, {
     hardsub_locale: string;
     url: string;

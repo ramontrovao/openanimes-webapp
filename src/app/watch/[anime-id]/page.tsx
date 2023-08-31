@@ -28,8 +28,6 @@ export default function Watch({ params }: IWatchProps) {
 
         const streamData = await getEpisodeStream({ query: videoId as string })
 
-        console.log(streamData[0].adaptive_hls["pt-BR"].url)
-
         return setStream(streamData[0])
       } catch (error) {
         if (error instanceof AppError) {
@@ -57,13 +55,13 @@ export default function Watch({ params }: IWatchProps) {
   return (
     <>
       <div className="flex min-h-screen w-full flex-col overflow-hidden bg-gradient-to-r  from-zinc-900 to-zinc-950">
-        {stream && (
-          <main className='w-full h-full'>
-            <ReactPlayer config={{ file: { forceHLS: true } }} controls url={stream.adaptive_hls["pt-BR"].url} />
+        {!isLoading && stream && (
+          <main className='w-full h-full flex '>
+            <ReactPlayer config={{ file: { forceHLS: true} }} controls url={stream.adaptive_hls["pt-BR"].url} />
         </main>
         )}
 
-        {!stream && <main>
+        {isLoading && <main>
           <h1>Carregando...</h1></main>}
       </div>
     </>
