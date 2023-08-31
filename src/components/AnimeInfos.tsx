@@ -139,7 +139,7 @@ export const AnimeInfos = ({ anime, triggerComponent }: IAnimeInfosProps) => {
         {!isLoading && (
           <main className="mt-8 flex flex-col gap-4">
             {animeInfo?.episodesData?.map((episode) => (
-              <EpisodeInfos key={episode.id} episode={episode} />
+              <EpisodeInfos key={episode.id} anime={anime} episode={episode} />
             ))}
           </main>
         )}
