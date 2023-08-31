@@ -4,7 +4,8 @@ import { getEpisodeStream } from '@/services/api'
 import { TStreamData } from '@/types/Animes'
 import { AppError } from '@utils/AppError'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import ReactPlayer from "react-player/lazy"
 import { toast } from 'react-toastify'
 
 interface IWatchProps {
@@ -26,7 +27,9 @@ export default function Watch({ params }: IWatchProps) {
         setIsLoading(true)
 
         const streamData = await getEpisodeStream({ query: videoId as string })
-  
+
+        console.log(streamData[0].adaptive_hls["pt-BR"].url)
+
         return setStream(streamData[0])
       } catch (error) {
         if (error instanceof AppError) {
@@ -54,9 +57,14 @@ export default function Watch({ params }: IWatchProps) {
   return (
     <>
       <div className="flex min-h-screen w-full flex-col overflow-hidden bg-gradient-to-r  from-zinc-900 to-zinc-950">
-        <main>
-
+        {stream && (
+          <main className='w-full h-full'>
+            <ReactPlayer config={{ file: { forceHLS: true } }} controls url={stream.adaptive_hls["pt-BR"].url} />
         </main>
+        )}
+
+        {!stream && <main>
+          <h1>Carregando...</h1></main>}
       </div>
     </>
   )
